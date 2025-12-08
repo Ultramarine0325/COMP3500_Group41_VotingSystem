@@ -16,7 +16,8 @@ An online voting system developed for COMP 35000SEF, featuring user authenticati
    ```npm install
 
 3. Create a `.env` file in the root directory and add your credentials:
-   ```PORT=3000
+   ```
+   PORT=3000
    DB_NAME=voting_system
    MONGODB_URL=your_mongodb_connection_string_here
    SESSION_SECRET=your_secret_key
