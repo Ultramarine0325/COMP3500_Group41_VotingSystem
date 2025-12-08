@@ -4,8 +4,8 @@
 An online voting system developed for COMP 35000SEF, featuring user authentication, role-based access (Admin/Voter), and real-time voting analytics.
 
 ## Prerequisites
-* Node.js (v14 or higher)
-* MongoDB Account (or local instance)
+* Node.js 
+* MongoDB Account
 
 ## Installation
 1. Clone the repository:
