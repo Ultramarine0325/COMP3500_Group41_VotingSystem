@@ -13,7 +13,8 @@ An online voting system developed for COMP 35000SEF, featuring user authenticati
    git clone [https://github.com/您的帳號/COMP3500_Group41_VotingSystem.git](https://github.com/您的帳號/COMP3500_Group41_VotingSystem.git)
 
 2. Install dependencies:
-   ```npm install
+   ```
+   npm install
 
 3. Create a `.env` file in the root directory and add your credentials:
    ```
@@ -24,7 +25,8 @@ An online voting system developed for COMP 35000SEF, featuring user authenticati
 
 ## Usage
 1. Start the server:
-   ```npm start
+   ```
+   npm start
 
 2. Visit `http://localhost:3000` in your browser.
 
