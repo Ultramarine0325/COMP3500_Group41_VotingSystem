@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin DashBoard</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="login-container" style="width: 600px;">
+        <h1>Admin DashBoard</h1>
+        <p>Wellcome, <%= user.fullName %></p>
+        <hr>
+        
+        <h3>The Current Elections</h3>
+        <% if(elections.length === 0) { %>
+            <p>No Election Exist</p>
+        <% } else { %>
+            <ul>
+                <% elections.forEach(function(election) { %>
+                    <li>
+                        <strong><%= election.title %></strong> 
+                        (Status: <%= election.status %>)
+                        <br>
+                        <small>Vote Count Statistics: <%= election.candidates.reduce((acc, c) => acc + c.voteCount, 0) %></small>
+                    </li>
+
+                    <li style="margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid #eee;">
+
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <strong><%= election.title %></strong> 
+                                <span style="font-size: 0.8em; color: gray;">(<%= election.status %>)</span>
+                                <br>
+                                <small>總票數: <%= election.candidates.reduce((acc, c) => acc + c.voteCount, 0) %></small>
+                            </div>
+                            <div>
+                                <a href="/results/<%= election._id %>">
+                                    <button style="width: auto; padding: 5px 15px; background-color: #2196F3;">查看結果圖表</button>
+                                </a>
+                            </div>
+                        </div>
+                    </li>
+                <% }); %>
+            </ul>
+        <% } %>
+
+        <a href="/create-election"><button>Create Election</button></a>
+        <br><br>
+        <a href="/">Logout</a>
+    </div>
+</body>
+</html>

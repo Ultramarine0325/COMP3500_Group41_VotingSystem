@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Voter Election Center</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="login-container" style="width: 600px;">
+        <h1>Election Center</h1>
+        <p>Wellcome, <%= user.fullName %></p>
+        <p>Your Identity Category: <strong><%= user.eligibleGroup %></strong></p>
+        <hr>
+
+        <h3>The Current Elections</h3>
+        <% if(elections.length === 0) { %>
+            <p>No Election Exist </p>
+        <% } else { %>
+            <ul>
+                <% elections.forEach(function(election) { %>
+                    <li>
+                        <strong><%= election.title %></strong>
+                        <br>
+                        <small>Due Date: <%= election.endDate.toDateString() %></small>
+                        <br>
+                        <button onclick="window.location.href='/vote/<%= election._id %>'">Vote</button>
+                    </li>
+                <% }); %>
+            </ul>
+        <% } %>
+
+        <br>
+        <a href="/">Logout</a>
+    </div>
+</body>
+</html>

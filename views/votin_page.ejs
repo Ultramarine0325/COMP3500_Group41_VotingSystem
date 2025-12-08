@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= election.title %> - Vote</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="login-container" style="width: 500px;">
+        <h2><%= election.title %></h2>
+        <p><%= election.description %></p>
+        <hr>
+        
+        <form action="/vote/<%= election._id %>" method="POST">
+            <h3>Please select one candidate/option：</h3>
+            
+            <% election.candidates.forEach(function(candidate) { %>
+                <div style="margin-bottom: 10px; text-align: left; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                    <label style="cursor: pointer; display: block;">
+                        <input type="radio" name="selectedCandidate" value="<%= candidate.name %>" required>
+                        <strong><%= candidate.name %></strong>
+                    </label>
+                </div>
+            <% }); %>
+
+            <br>
+            <button type="submit" style="background-color: #4CAF50;">Confirm and Submit</button>
+        </form>
+        
+        <br>
+        <a href="/dashboard">Cancel</a>
+    </div>
+</body>
+</html>
