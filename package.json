@@ -1,0 +1,29 @@
+{
+  "name": "comp3500_group41_votingsystem",
+  "version": "1.0.0",
+  "description": "Online Voting System for COMP 35000SEF (Group 41)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ultramarine0325/COMP3500_Group41_VotingSystem.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Ultramarine0325/COMP3500_Group41_VotingSystem/issues"
+  },
+  "homepage": "https://github.com/Ultramarine0325/COMP3500_Group41_VotingSystem#readme",
+  "dependencies": {
+    "body-parser": "^2.2.1",
+    "dotenv": "^17.2.3",
+    "ejs": "^3.1.10",
+    "express": "^5.2.1",
+    "mysql2": "^3.15.3",
+    "nodemon": "^3.1.11"
+  }
+}
