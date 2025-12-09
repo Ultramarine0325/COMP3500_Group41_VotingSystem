@@ -74,7 +74,7 @@ app.get('/dashboard', async (req, res) => {
     );
     
     if (user.role === 'admin') {
-        const elections = await Election.find({searchFilter});
+        const elections = await Election.find(searchFilter);
         res.render('admin_dashboard', { user, elections, searchQuery});
     } else {
         const elections = await Election.find({
