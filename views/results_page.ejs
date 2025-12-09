@@ -1,101 +1,104 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Election Result - <%= election.title %></title>
+    <title>Election Results</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/style.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <div class="login-container" style="width: 800px;">
-        <div style="display: flex; justify-content: space-between;">
-            <h2><%= election.title %> - Currect Result</h2>
-            <a href="/dashboard"><button style="width: auto; background-color: #666;">Back</button></a>
-        </div>
-        <hr>
-
-        <div style="display: flex; justify-content: space-around; flex-wrap: wrap;">
-            <div style="width: 350px;">
-                <canvas id="pieChart"></canvas>
+    <nav class="navbar navbar-dark bg-transparent mb-4 pt-3">
+        <div class="container">
+            <a href="/dashboard" class="btn btn-outline-light">&larr; Back to Dashboard</a>
+            <span class="navbar-brand mb-0 h1"><%= election.title %> - Results</span>
+            <div style="width: 80px;"></div> </div>
+    </nav>
+    <div class="container">
+        <div class="card main-card mb-4">
+            <div class="card-body">
+                <div class="row justify-content-center">
+                    <div class="col-md-6 col-lg-5 mb-4 text-center">
+                        <h5 class="text-muted mb-3">Vote Distribution</h5>
+                        <div style="max-width: 350px; margin: 0 auto;">
+                            <canvas id="pieChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 col-lg-5 mb-4 text-center">
+                        <h5 class="text-muted mb-3">Vote Counts</h5>
+                        <div style="max-width: 350px; margin: 0 auto;">
+                            <canvas id="barChart"></canvas>
+                        </div>
+                    </div>
+                </div>
             </div>
-            
-            <div style="width: 350px;">
-                <canvas id="barChart"></canvas>
-            </div>
         </div>
-
-        <div style="margin-top: 30px;">
-            <h3>Detail Statistic</h3>
-            <table border="1" cellpadding="10" cellspacing="0" style="width: 100%; border-collapse: collapse;">
-                <tr style="background-color: #f0f0f0;">
-                    <th>Candidate/option</th>
-                    <th>Votes received</th>
-                    <th>Vote percentage</th>
-                </tr>
-                <% 
-                   const totalVotes = election.candidates.reduce((acc, c) => acc + c.voteCount, 0); 
-                %>
-                <% election.candidates.forEach(function(candidate) { %>
-                    <tr>
-                        <td><%= candidate.name %></td>
-                        <td><%= candidate.voteCount %> vote</td>
-                        <td>
-                            <%= totalVotes > 0 ? ((candidate.voteCount / totalVotes) * 100).toFixed(1) : 0 %>%
-                        </td>
-                    </tr>
-                <% }); %>
-            </table>
+        <div class="card main-card">
+            <div class="card-header bg-white border-0 pt-4">
+                <h4>Detailed Statistics</h4>
+            </div>
+            <div class="card-body">
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Candidate / Option</th>
+                            <th>Votes Received</th>
+                            <th>Percentage</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% 
+                           const totalVotes = election.candidates.reduce((acc, c) => acc + c.voteCount, 0); 
+                           const maxVotes = Math.max(...election.candidates.map(c => c.voteCount));
+                        %>
+                        <% election.candidates.forEach(function(candidate) { %>
+                            <% const isWinner = totalVotes > 0 && candidate.voteCount === maxVotes; %>
+                            <tr class="<%= isWinner ? 'table-success' : '' %>">
+                                <td class="fw-bold"><%= candidate.name %></td>
+                                <td><%= candidate.voteCount %></td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="progress flex-grow-1 me-2" style="height: 6px;">
+                                            <div class="progress-bar" role="progressbar" style="width: <%= totalVotes > 0 ? (candidate.voteCount/totalVotes)*100 : 0 %>%"></div>
+                                        </div>
+                                        <span><%= totalVotes > 0 ? ((candidate.voteCount / totalVotes) * 100).toFixed(1) : 0 %>%</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <% if (isWinner && totalVotes > 0) { %>
+                                        <span class="badge bg-success">Leading</span>
+                                    <% } else { %>
+                                        <span class="badge bg-secondary">-</span>
+                                    <% } %>
+                                </td>
+                            </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 
     <script>
         const candidates = <%- JSON.stringify(election.candidates) %>;
-        
         const labels = candidates.map(c => c.name);
         const data = candidates.map(c => c.voteCount);
+        const backgroundColors = ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40'];
 
-        const backgroundColors = [
-            '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40'
-        ];
-
-        const ctxPie = document.getElementById('pieChart').getContext('2d');
-        new Chart(ctxPie, {
+        new Chart(document.getElementById('pieChart').getContext('2d'), {
             type: 'pie',
-            data: {
-                labels: labels,
-                datasets: [{
-                    data: data,
-                    backgroundColor: backgroundColors
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    title: { display: true, text: 'Vote Share Distribution' }
-                }
-            }
+            data: { labels: labels, datasets: [{ data: data, backgroundColor: backgroundColors }] },
+            options: { responsive: true }
         });
 
-        const ctxBar = document.getElementById('barChart').getContext('2d');
-        new Chart(ctxBar, {
+        new Chart(document.getElementById('barChart').getContext('2d'), {
             type: 'bar',
-            data: {
-                labels: labels,
-                datasets: [{
-                    label: 'Vote received',
-                    data: data,
-                    backgroundColor: backgroundColors,
-                    borderWidth: 1
-                }]
-            },
-            options: {
+            data: { labels: labels, datasets: [{ label: 'Votes', data: data, backgroundColor: backgroundColors }] },
+            options: { 
                 responsive: true,
-                scales: {
-                    y: { beginAtZero: true, ticks: { stepSize: 1 } }
-                },
-                plugins: {
-                    legend: { display: false },
-                    title: { display: true, text: 'Vote Count' }
-                }
+                scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } },
+                plugins: { legend: { display: false } }
             }
         });
     </script>
