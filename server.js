@@ -227,7 +227,6 @@ app.get('/seed', async (req, res) => {
     } catch (err) {
         res.send("Error: " + err.message);
     }
-    res.send("Admin seed check");
 });
 
 connectDB().then(() => {
