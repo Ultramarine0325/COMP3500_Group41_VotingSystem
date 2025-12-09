@@ -43,6 +43,9 @@
                                             <a href="/results/<%= election._id %>" class="btn btn-outline-primary btn-sm">
                                             View Results
                                         </a>
+                                            <a href="/export-csv/<%= election._id %>" class="btn btn-outline-success btn-sm ms-2">
+                                            Export CSV
+                                        </a>
                                         <form action="/delete-election/<%= election._id %>" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure to delete?');">
                                             <button type="submit" class="btn btn-outline-danger btn-sm ms-2">
                                                Delete
