@@ -16,12 +16,6 @@
         <% } else { %>
             <ul>
                 <% elections.forEach(function(election) { %>
-                    <li>
-                        <strong><%= election.title %></strong> 
-                        (Status: <%= election.status %>)
-                        <br>
-                        <small>Vote Count Statistics: <%= election.candidates.reduce((acc, c) => acc + c.voteCount, 0) %></small>
-                    </li>
 
                     <li style="margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid #eee;">
 
@@ -30,11 +24,11 @@
                                 <strong><%= election.title %></strong> 
                                 <span style="font-size: 0.8em; color: gray;">(<%= election.status %>)</span>
                                 <br>
-                                <small>總票數: <%= election.candidates.reduce((acc, c) => acc + c.voteCount, 0) %></small>
+                                <small>Total Vote Count: <%= election.candidates.reduce((acc, c) => acc + c.voteCount, 0) %></small>
                             </div>
                             <div>
                                 <a href="/results/<%= election._id %>">
-                                    <button style="width: auto; padding: 5px 15px; background-color: #2196F3;">查看結果圖表</button>
+                                    <button style="width: auto; padding: 5px 15px; background-color: #2196F3;">Check Result Graph</button>
                                 </a>
                             </div>
                         </div>
