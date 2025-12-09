@@ -6,6 +6,7 @@ require('dotenv').config();
 const User = require('./models/User');
 const Election = require('./models/Election');
 const Vote = require('./models/Vote');
+const Log = require('./models/Log');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
