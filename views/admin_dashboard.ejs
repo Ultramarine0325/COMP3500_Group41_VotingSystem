@@ -39,9 +39,15 @@
                                             <span class="badge bg-primary rounded-pill"><%= election.status %></span>
                                             <small class="text-muted ms-2">Total Votes: <%= election.candidates.reduce((acc, c) => acc + c.voteCount, 0) %></small>
                                         </div>
-                                        <a href="/results/<%= election._id %>" class="btn btn-outline-primary btn-sm">
+                                        <div class="btn-group">
+                                            <a href="/results/<%= election._id %>" class="btn btn-outline-primary btn-sm">
                                             View Results
                                         </a>
+                                        <form action="/delete-election/<%= election._id %>" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure to delete?');">
+                                            <button type="submit" class="btn btn-outline-danger btn-sm ms-2">
+                                               Delete
+                                            </button>
+                                        </form>
                                     </div>
                                 <% }); %>
                             </div>
