@@ -3,6 +3,12 @@ body {
     min-height: 100vh;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     padding-bottom: 50px;
+    color: #333;
+}
+
+.navbar-brand, .nav-link {
+    color: white !important;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
 .main-card {
@@ -10,6 +16,23 @@ body {
     border-radius: 15px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     background-color: rgba(255, 255, 255, 0.98);
+    overflow: hidden;
+}
+
+.list-group-item {
+    border-left: none;
+    border-right: none;
+    transition: background-color 0.2s;
+}
+.list-group-item:first-child { border-top: none; }
+.list-group-item:last-child { border-bottom: none; }
+.list-group-item:hover {
+    background-color: #f8f9fa;
+}
+
+.btn-group-action {
+    display: flex;
+    gap: 5px;
 }
 
 h1, h2, h3, h4 {
@@ -17,6 +40,7 @@ h1, h2, h3, h4 {
     font-weight: 700;
 }
 
-a {
-    text-decoration: none;
+.badge {
+    font-size: 0.85em;
+    padding: 0.5em 0.8em;
 }
