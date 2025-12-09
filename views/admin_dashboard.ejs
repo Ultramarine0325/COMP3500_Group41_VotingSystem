@@ -1,46 +1,55 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <title>Admin Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/style.css">
-    <title>Admin DashBoard</title>
 </head>
 <body>
-    <div class="login-container" style="width: 600px;">
-        <h1>Admin DashBoard</h1>
-        <p>Wellcome, <%= user.fullName %></p>
-        <hr>
-        
-        <h3>The Current Elections</h3>
-        <% if(elections.length === 0) { %>
-            <p>No Election Exist</p>
-        <% } else { %>
-            <ul>
-                <% elections.forEach(function(election) { %>
-
-                    <li style="margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid #eee;">
-
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
+    <nav class="navbar navbar-dark bg-transparent mb-4 pt-3">
+        <div class="container">
+            <span class="navbar-brand h1 mb-0">Online Voting System</span>
+            <a href="/" class="btn btn-outline-light btn-sm">Logout</a>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card main-card">
+                    <div class="card-header bg-white border-0 pt-4 pb-0">
+                        <div class="d-flex justify-content-between align-items-center">
                             <div>
-                                <strong><%= election.title %></strong> 
-                                <span style="font-size: 0.8em; color: gray;">(<%= election.status %>)</span>
-                                <br>
-                                <small>Total Vote Count: <%= election.candidates.reduce((acc, c) => acc + c.voteCount, 0) %></small>
+                                <h4 class="mb-1">Admin Dashboard</h4>
+                                <p class="text-muted mb-0">Welcome, <%= user.fullName %></p>
                             </div>
-                            <div>
-                                <a href="/results/<%= election._id %>">
-                                    <button style="width: auto; padding: 5px 15px; background-color: #2196F3;">Check Result Graph</button>
-                                </a>
-                            </div>
+                            <a href="/create-election" class="btn btn-success">+ New Election</a>
                         </div>
-                    </li>
-                <% }); %>
-            </ul>
-        <% } %>
-
-        <a href="/create-election"><button>Create Election</button></a>
-        <br><br>
-        <a href="/">Logout</a>
+                    </div>
+                    <div class="card-body">
+                        <hr>
+                        <h5 class="card-title mb-3">Managed Elections</h5>
+                        <% if(elections.length === 0) { %>
+                            <div class="alert alert-info">No elections created yet.</div>
+                        <% } else { %>
+                            <div class="list-group">
+                                <% elections.forEach(function(election) { %>
+                                    <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center p-3">
+                                        <div>
+                                            <h5 class="mb-1"><%= election.title %></h5>
+                                            <span class="badge bg-primary rounded-pill"><%= election.status %></span>
+                                            <small class="text-muted ms-2">Total Votes: <%= election.candidates.reduce((acc, c) => acc + c.voteCount, 0) %></small>
+                                        </div>
+                                        <a href="/results/<%= election._id %>" class="btn btn-outline-primary btn-sm">
+                                            View Results
+                                        </a>
+                                    </div>
+                                <% }); %>
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>
