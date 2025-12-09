@@ -61,6 +61,11 @@ app.get('/dashboard', async (req, res) => {
 
     const user = req.session.user;
     const now = new Date();
+    const searchQuery = req.query.search || "";
+
+    const searchFilter = {
+        title: { $regex: searchQuery, $options: 'i' }
+    };
 
     await Election.updateMany(
         { endDate: { $lt: now }, status: 'active' },
@@ -68,8 +73,8 @@ app.get('/dashboard', async (req, res) => {
     );
     
     if (user.role === 'admin') {
-        const elections = await Election.find({});
-        res.render('admin_dashboard', { user, elections });
+        const elections = await Election.find({searchFilter});
+        res.render('admin_dashboard', { user, elections, searchQuery});
     } else {
         const elections = await Election.find({
             status: 'active',
