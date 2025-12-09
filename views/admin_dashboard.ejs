@@ -51,6 +51,12 @@
                                             <button type="submit" class="btn btn-outline-danger btn-sm ms-2">
                                                Delete
                                             </button>
+                                        <form action="/dashboard" method="GET" class="mb-3 d-flex">
+                                            <input type="text" name="search" class="form-control me-2" placeholder="Search elections..." value="<%= locals.searchQuery %>">
+                                            <button type="submit" class="btn btn-outline-primary">Search</button>
+                                            <% if(locals.searchQuery) { %>
+                                               <a href="/dashboard" class="btn btn-outline-secondary ms-1">Clear</a>
+                                            <% } %>
                                         </form>
                                     </div>
                                 <% }); %>
