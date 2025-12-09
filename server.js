@@ -60,6 +60,12 @@ app.get('/dashboard', async (req, res) => {
     if (!req.session.user) return res.redirect('/');
 
     const user = req.session.user;
+    const now = new Date();
+
+    await Election.updateMany(
+        { endDate: { $lt: now }, status: 'active' },
+        { $set: { status: 'closed' } }
+    );
     
     if (user.role === 'admin') {
         const elections = await Election.find({});
