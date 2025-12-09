@@ -212,6 +212,49 @@ app.post('/vote/:id', async (req, res) => {
     }
 });
 
+app.get('/export-csv/:id', async (req, res) => {
+    if (!req.session.user || req.session.user.role !== 'admin') {
+        return res.send("Access Denied");
+    }
+
+    try {
+        const election = await Election.findById(req.params.id);
+        if (!election) return res.send("Election Not Found");
+
+        let csvContent = "Candidate Name,Votes Received\n"; 
+        election.candidates.forEach(c => {
+            csvContent += `${c.name},${c.voteCount}\n`;
+        });
+
+        res.setHeader('Content-Type', 'text/csv');
+        res.setHeader('Content-Disposition', `attachment; filename="election_results_${req.params.id}.csv"`);
+
+        res.send(csvContent);
+
+    } catch (err) {
+        console.error(err);
+        res.send("Export Failed");
+    }
+});
+
+app.get('/admin/users', async (req, res) => {
+    if (!req.session.user || req.session.user.role !== 'admin') return res.redirect('/');
+    
+    const allUsers = await User.find({});
+    res.render('user_management', { user: req.session.user, allUsers });
+});
+
+app.post('/admin/delete-user/:id', async (req, res) => {
+    if (!req.session.user || req.session.user.role !== 'admin') return res.send("Access Denied");
+    
+    try {
+        await User.findByIdAndDelete(req.params.id);
+        res.redirect('/admin/users');
+    } catch (err) {
+        res.send("Delete Failed");
+    }
+});
+
 app.get('/seed-voter', async (req, res) => {
     try {
         const exist = await User.findOne({ username: 'student1' });
