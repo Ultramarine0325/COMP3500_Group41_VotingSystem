@@ -1,33 +1,61 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title><%= election.title %> - Vote</title>
+    <title>Create Election</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-    <div class="login-container" style="width: 500px;">
-        <h2><%= election.title %></h2>
-        <p><%= election.description %></p>
-        <hr>
-        
-        <form action="/vote/<%= election._id %>" method="POST">
-            <h3>Please select one candidate/option：</h3>
-            
-            <% election.candidates.forEach(function(candidate) { %>
-                <div style="margin-bottom: 10px; text-align: left; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
-                    <label style="cursor: pointer; display: block;">
-                        <input type="radio" name="selectedCandidate" value="<%= candidate.name %>" required>
-                        <strong><%= candidate.name %></strong>
-                    </label>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="card main-card">
+                    <div class="card-header bg-white border-0 pt-4">
+                        <h4>Create New Election</h4>
+                    </div>
+                    <div class="card-body p-4">
+                        <form action="/create-election" method="POST">                            
+                            <div class="mb-3">
+                                <label class="form-label">Election Title</label>
+                                <input type="text" name="title" class="form-control" placeholder="e.g. 2025 Student Union" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Description</label>
+                                <textarea name="description" class="form-control" rows="3" placeholder="Briefly describe the purpose..."></textarea>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Start Date</label>
+                                    <input type="date" name="startDate" class="form-control" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">End Date</label>
+                                    <input type="date" name="endDate" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Eligible Groups</label>
+                                <select name="allowedGroups" class="form-select" multiple size="3" required>
+                                    <option value="student">Student</option>
+                                    <option value="staff">Staff</option>
+                                    <option value="public">Public</option>
+                                </select>
+                                <div class="form-text">Hold Ctrl (Windows) or Cmd (Mac) to select multiple.</div>
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label">Candidates / Options</label>
+                                <textarea name="candidatesStr" class="form-control" rows="4" placeholder="Candidate A&#10;Candidate B&#10;Candidate C" required></textarea>
+                                <div class="form-text">One candidate per line.</div>
+                            </div>
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-primary">Publish Election</button>
+                                <a href="/dashboard" class="btn btn-light">Cancel</a>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-            <% }); %>
-
-            <br>
-            <button type="submit" style="background-color: #4CAF50;">Confirm and Submit</button>
-        </form>
-        
-        <br>
-        <a href="/dashboard">Cancel</a>
+            </div>
+        </div>
     </div>
 </body>
 </html>
