@@ -107,8 +107,6 @@ app.post('/create-election', async (req, res) => {
             <a href="/">Return to the homepage and login again to review</a>
         `);
 
-        res.redirect('/dashboard');
-
     } catch (err) {
         console.error(err);
         res.send("Create Fail: " + err.message);
