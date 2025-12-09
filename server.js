@@ -113,6 +113,28 @@ app.post('/create-election', async (req, res) => {
     }
 });
 
+app.post('/delete-election/:id', async (req, res) => {
+    if (!req.session.user || req.session.user.role !== 'admin') {
+        return res.send("Access Denied");
+    }
+
+    const electionId = req.params.id;
+
+    try {
+        await Vote.deleteMany({ electionId: electionId });
+
+        await Election.findByIdAndDelete(electionId);
+
+        console.log(`Election [${electionId}] deleted by admin.`);
+        
+        res.redirect('/dashboard');
+
+    } catch (err) {
+        console.error(err);
+        res.send("Delete Fail: " + err.message);
+    }
+});
+
 app.get('/results/:id', async (req, res) => {
     if (!req.session.user || req.session.user.role !== 'admin') {
         return res.send("Access Denied");
