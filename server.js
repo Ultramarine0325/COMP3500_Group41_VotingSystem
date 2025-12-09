@@ -131,7 +131,11 @@ app.post('/delete-election/:id', async (req, res) => {
 
         await Election.findByIdAndDelete(electionId);
 
-        console.log(`Election [${electionId}] deleted by admin.`);
+        await new Log({
+        action: "Delete Election",
+        operator: req.session.user.username,
+        details: `Deleted election ID: ${req.params.id}`
+    }).save();
         
         res.redirect('/dashboard');
 
