@@ -12,16 +12,14 @@ An online voting system developed for COMP 35000SEF, featuring user authenticati
 
 ## Installation
 1. Clone the repository:
-   ```bash
+   ``` bash
    git clone https://github.com/Ultramarine0325/COMP3500_Group41_VotingSystem.git
 
 2. Install dependencies:
-   ```
-   npm install
+   ``` npm install
 
 3. Create a `.env` file in the root directory and add your credentials:
-   ```
-   PORT=3000
+   ``` PORT=3000
    DB_NAME=voting_system
    MONGODB_URL=mongodb+srv://db_user:14226245@cluster0.ewnikit.mongodb.net/?appName=Cluster0
    SESSION_SECRET=COMP3500
